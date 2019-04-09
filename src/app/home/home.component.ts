@@ -8,11 +8,28 @@ import { Place } from '../model/place';
   styleUrls: ['./home.component.less']
 })
 export class HomeComponent implements OnInit {
-places :Array<Place> = [];
-  constructor(private placesService: PlacesService) {
+  places :Array<Place> = [];
+  name :string;
+  address :string;
+  city :string;
+
+  constructor(private placesService: PlacesService) {}
+
+  ngOnInit() {
     this.placesService.getAllPlace().subscribe(response => this.places = response);
   }
 
-  ngOnInit() {}
-
+  sendPlace = () => {
+    let place :Place = {
+      name: this.name,
+      address: this.address,
+      city: this.city
+    }
+    this.placesService.sendPlaces(place).subscribe(() => {
+      this.placesService.getAllPlace().subscribe(response => this.places = response);
+      this.name = "";
+      this.address = "";
+      this.city = "";
+    });
+  }
 }

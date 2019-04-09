@@ -1,8 +1,16 @@
-<p>
-  home works!
-</p>
-<div *ngFor="let place of places">
-    <p>{{place.name}}</p>
-    <p>{{place.address}}</p>
-    <p>{{place.city}}</p>
+<div>
+    <ul *ngFor="let place of places">
+        <li>{{place.name}}</li>
+        <li>{{place.address}}</li>
+        <li>{{place.city}}</li>
+    </ul>
+    <br>
+</div>
+<div>
+    <form #testForm=ngForm>
+        <input type="text" name="name" [(ngModel)]=name placeholder="name" required><br><br>
+        <input type="text" name="address" [(ngModel)]=address placeholder="address" required><br><br>
+        <input type="text" name="city" [(ngModel)]=city placeholder="city" required><br><br>
+    </form>
+    <button type="button" name="button" (click)="sendPlace()">envoyer</button>
 </div>
