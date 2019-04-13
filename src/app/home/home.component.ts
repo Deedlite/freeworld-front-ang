@@ -17,30 +17,9 @@ export class HomeComponent implements OnInit {
   address :string;
   city :string;
 
-  // test openstreetmap
-  latitude: number = 42.7027800;
-  longitude: number = 9.4500000;
-  map : any;
-  // fin test openstreemap
-
   constructor(private placesService: PlacesService) {}
 
   ngOnInit() {
-    // test openstreetmap
-    this.map = new ol.Map({
-      target: 'map',
-      layers: [
-        new ol.layer.Tile({
-          source: new ol.source.OSM()
-        })
-      ],
-      view: new ol.View({
-        center: ol.proj.fromLonLat([9.4500000, 42.7027800]),
-        zoom: 8
-      })
-    });
-    // fin test openstreetmap
-    
     this.placesService.getAllPlace().subscribe(response => this.places = response);
   }
 
