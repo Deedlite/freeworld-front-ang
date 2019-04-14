@@ -10,45 +10,46 @@ import { icon, latLng, marker, polyline, tileLayer, Map } from 'leaflet';
 export class MapComponent implements OnInit {
 
   options;
-  option = {
-    enableHighAccuracy: true,
-    timeout: 5000,
-    maximumAge: 0
-  };
-  userLat :number;
-  userLon :number;
+  layers;
+  lat :number;
+  lon :number;
 
   constructor() {
   }
 
   ngOnInit() {
-    if(window.navigator && window.navigator.geolocation) {
-      window.navigator.geolocation.getCurrentPosition( response => {
-        this.success(response.coords);
+    this.initCoords();
+  }
+
+  initCoords() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position: Position) => {
+        if (position) {
+          console.log("Latitude: " + position.coords.latitude +
+            "Longitude: " + position.coords.longitude);
+          this.lat = position.coords.latitude;
+          this.lon = position.coords.longitude;
+          console.log(this.lat);
+          console.log(this.lon);
+        }
+        this.options = {
+          layers: [
+            tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+              attribution: '&copy; OpenStreetMap contributors'
+            })
+          ],
+          zoom: 7,
+          center: latLng([ this.lat, this.lon ]),
+        };
+
+        this.layers = [
+            marker([ this.lat, this.lon ])
+        ];
+
       },
-      error => {
-        this.error(error);
-      }, this.option);
+        (error: PositionError) => console.log(error));
+    } else {
+      alert("Geolocation is not supported by this browser.");
     }
-    this.options = {
-      layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '&copy; OpenStreetMap contributors'
-        })
-      ],
-      zoom: 7,
-      center: latLng([ this.userLat, this.userLon ])
-    };
   }
-
-  success(pos) {
-    this.userLat = pos.latitude;
-    this.userLon = pos.longitude;
-    console.log("latitude :" + this.userLat + " and longitude: " + this.userLon);
-  }
-
-  error(err) {
-    console.warn(`ERREUR (${err.code}): ${err.message}`);
-  }
-
 }

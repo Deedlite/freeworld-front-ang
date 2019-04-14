@@ -21,7 +21,7 @@ import { MapComponent } from './map/map.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    LeafletModule.forRoot()
+    LeafletModule
   ],
   providers: [],
   bootstrap: [AppComponent]

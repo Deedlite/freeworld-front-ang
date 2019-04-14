@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
   constructor(private placesService: PlacesService) {}
 
   ngOnInit() {
-    this.placesService.getAllPlace().subscribe(response => this.places = response);
+    //this.placesService.getAllPlace().subscribe(response => this.places = response);
   }
 
   sendPlace = () => {
@@ -36,4 +36,5 @@ export class HomeComponent implements OnInit {
       this.city = "";
     });
   }
+
 }
