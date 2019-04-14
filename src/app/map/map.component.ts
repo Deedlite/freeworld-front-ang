@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { icon, latLng, marker, polyline, tileLayer, Map } from 'leaflet';
+import { WheelmapService } from '../services/wheelmap.service';
 
 @Component({
   selector: 'app-map',
@@ -14,23 +15,22 @@ export class MapComponent implements OnInit {
   lat :number;
   lon :number;
 
-  constructor() {
+  constructor(private wheelmapService: WheelmapService) {
   }
 
   ngOnInit() {
     this.initCoords();
+    this.wheelmapService.getAllNodeAround(this.lat, this.lon).subscribe(response => {
+        console.log(response)
+      })
   }
 
   initCoords() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position: Position) => {
         if (position) {
-          console.log("Latitude: " + position.coords.latitude +
-            "Longitude: " + position.coords.longitude);
           this.lat = position.coords.latitude;
           this.lon = position.coords.longitude;
-          console.log(this.lat);
-          console.log(this.lon);
         }
         this.options = {
           layers: [
@@ -38,7 +38,7 @@ export class MapComponent implements OnInit {
               attribution: '&copy; OpenStreetMap contributors'
             })
           ],
-          zoom: 7,
+          zoom: 12,
           center: latLng([ this.lat, this.lon ]),
         };
 
