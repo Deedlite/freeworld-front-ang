@@ -20,9 +20,6 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
     this.initCoords();
-    this.wheelmapService.getAllNodeAround(this.lat, this.lon).subscribe(response => {
-        console.log(response)
-      })
   }
 
   initCoords() {
@@ -45,7 +42,9 @@ export class MapComponent implements OnInit {
         this.layers = [
             marker([ this.lat, this.lon ])
         ];
-
+        this.wheelmapService.getAllNodeAround(this.lat, this.lon).subscribe(response => {
+            console.log(response)
+          })
       },
         (error: PositionError) => console.log(error));
     } else {

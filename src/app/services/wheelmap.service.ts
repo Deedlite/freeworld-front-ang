@@ -6,6 +6,7 @@ import { HttpClient,HttpHeaders } from '@angular/common/http';
 })
 export class WheelmapService {
   apiKey = "soisHW5J5ytmFttvXY-C"
+  headers = new HttpHeaders().set('access-control-allow-origin',"*");
 
   constructor( private http:HttpClient) {}
 
